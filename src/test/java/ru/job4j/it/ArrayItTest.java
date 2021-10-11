@@ -30,6 +30,7 @@ public class ArrayItTest {
                 new int[]{}
         );
         it.next();
+
     }
 
 }
