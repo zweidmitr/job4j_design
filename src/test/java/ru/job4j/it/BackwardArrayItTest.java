@@ -26,7 +26,7 @@ public class BackwardArrayItTest {
 
     @Test(expected = NoSuchElementException.class)
     public void whenNextFromEmpty() {
-        ArrayIt it = new ArrayIt(
+        BackwardArrayIt it = new BackwardArrayIt(
                 new int[]{}
         );
         it.next();
