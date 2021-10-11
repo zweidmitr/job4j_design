@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import java.util.NoSuchElementException;
 
-public class ArrayItTest{
+public class ArrayItTest {
 
     @Test
     public void whenMultiCallHasNextThenTrue() {
@@ -27,7 +27,7 @@ public class ArrayItTest{
     @Test(expected = NoSuchElementException.class)
     public void whenNextFromEmpty() {
         ArrayIt it = new ArrayIt(
-                new int[] {}
+                new int[]{}
         );
         it.next();
     }
