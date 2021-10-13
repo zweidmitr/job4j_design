@@ -12,13 +12,9 @@ public class FlatMap<T> implements Iterator<T> {
 
     @Override
     public boolean hasNext() {
-        while (cursor.hasNext() && cursor == null) {
+        while ((cursor.hasNext() && cursor == null) || (cursor != null && data.hasNext() && !cursor.hasNext())) {
             cursor = data.next();
         }
-        while (cursor != null && data.hasNext() && !cursor.hasNext()) {
-            cursor = data.next();
-        }
-
         return cursor.hasNext();
     }
 
@@ -40,11 +36,5 @@ public class FlatMap<T> implements Iterator<T> {
         while (flat.hasNext()) {
             System.out.println(flat.next());
         }
-        String string1 = "Амиго";
-        String string2 = string1;
-        String string3 = new String(string1);
-        System.out.println(string1 == string2);
-        System.out.println(string1 == string3);
-        System.out.println(string2 == string3);
     }
 }
