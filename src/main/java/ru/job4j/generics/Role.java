@@ -9,4 +9,9 @@ public class Role extends Base {
     public String getId() {
         return super.getId();
     }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

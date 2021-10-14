@@ -10,4 +10,11 @@ public class User extends Base {
     public String getId() {
         return super.getId();
     }
+
+    @Override
+    public String toString() {
+        return "User "
+                + "id: " + getId();
+    }
 }
+
