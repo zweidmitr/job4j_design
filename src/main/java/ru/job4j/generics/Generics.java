@@ -15,22 +15,15 @@ public class Generics {
         second.add(new Predator());
         third.add(new Tiger());
 
-//        gen.printObject(first);
-//        gen.printObject(second);
-//        gen.printObject(third);
-//        System.out.println();
-
-        // gen.printBoundedWildCard(first); - из-за ограничения сверху
         gen.printBoundedWildCard(second);
         gen.printBoundedWildCard(third);
         System.out.println();
 
         gen.printLowerBoundedWildCard(first);
         gen.printLowerBoundedWildCard(second);
-//        gen.printLowerBoundedWildCard(third); - из-за ограничения снизу
     }
 
-    public void printObject(List<Object> list) {
+    public void printObject(List<?> list) {
         for (Iterator<?> it = list.iterator(); it.hasNext();) {
             Object next = it.next();
             System.out.println("Текущий элемент: " + next);
