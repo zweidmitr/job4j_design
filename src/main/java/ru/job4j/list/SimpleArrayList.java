@@ -22,16 +22,23 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public void add(T value) {
         if (size == container.length) {
-            T[] newContainer = (T[]) new Object[container.length * 2];
-            T temp;
-            for (int i = 0; i < container.length - 1; i++) {
-                newContainer[i] = container[i];
-            }
-            container = newContainer;
+            increaseLength();
         }
         container[size] = value;
         size++;
         modCount++;
+    }
+
+    /**
+     * метод увеличивает размер массива в два раза
+     */
+    void increaseLength() {
+        T[] newContainer = (T[]) new Object[container.length * 2];
+        T temp;
+        for (int i = 0; i < container.length - 1; i++) {
+            newContainer[i] = container[i];
+        }
+        container = newContainer;
     }
 
     /**
@@ -41,6 +48,7 @@ public class SimpleArrayList<T> implements List<T> {
      */
     @Override
     public T set(int index, T newValue) {
+        Objects.checkIndex(index, container.length);
         T oldValue = container[index];
         container[index] = newValue;
         return oldValue;
@@ -53,7 +61,7 @@ public class SimpleArrayList<T> implements List<T> {
      */
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, size);
+        Objects.checkIndex(index, container.length);
         final Object[] es = container;
         T oldValue = (T) es[index];
         System.arraycopy(
@@ -76,7 +84,7 @@ public class SimpleArrayList<T> implements List<T> {
      */
     @Override
     public T get(int index) {
-        Objects.checkIndex(index, size);
+        Objects.checkIndex(index, container.length);
         return container[index];
     }
 
@@ -105,9 +113,17 @@ public class SimpleArrayList<T> implements List<T> {
             /**
              * проверка след элемента в размере
              * @return true/false
+             * ConcurrentModificationException. Относится ко второму показателю - числу модификаций.
+             * Чтобы кинуть это исключение заводят отдельную переменную в итераторе expectedModCount = modCount
+             * и проверяют условие if (expectedModCount != modCount).
+             * Если условие выполнено, значит на момент итерирования была изменена коллекция, поэтому вылетает исключение.
+             * Это называется fail-fast поведение
              */
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
                 return cursor < size;
             }
 
@@ -128,9 +144,6 @@ public class SimpleArrayList<T> implements List<T> {
              */
             @Override
             public T next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
