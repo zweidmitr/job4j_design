@@ -33,12 +33,7 @@ public class SimpleArrayList<T> implements List<T> {
      * метод увеличивает размер массива в два раза
      */
     void increaseLength() {
-        T[] newContainer = (T[]) new Object[container.length * 2];
-        T temp;
-        for (int i = 0; i < container.length - 1; i++) {
-            newContainer[i] = container[i];
-        }
-        container = newContainer;
+        container = Arrays.copyOf(container, container.length * 2);
     }
 
     /**
@@ -48,7 +43,7 @@ public class SimpleArrayList<T> implements List<T> {
      */
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, size);
         T oldValue = container[index];
         container[index] = newValue;
         return oldValue;
@@ -61,7 +56,7 @@ public class SimpleArrayList<T> implements List<T> {
      */
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, size);
         final Object[] es = container;
         T oldValue = (T) es[index];
         System.arraycopy(
@@ -84,7 +79,7 @@ public class SimpleArrayList<T> implements List<T> {
      */
     @Override
     public T get(int index) {
-        Objects.checkIndex(index, container.length);
+        Objects.checkIndex(index, size);
         return container[index];
     }
 
