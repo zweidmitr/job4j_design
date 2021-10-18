@@ -10,15 +10,14 @@ public class SimpleArrayList<T> implements List<T> {
 
     private int modCount;
 
-    public int lastRet;
-
     public SimpleArrayList(int capacity) {
         this.container = (T[]) new Object[capacity];
     }
 
     /**
-     * добавляем новые элементы в лист
-     * увеличиваем размер массива?
+     * добавляем в контейнер новое значение
+     * проверяем надо ли увеличивать размер
+     * @param value добавляемое значение
      */
     @Override
     public void add(T value) {
@@ -36,7 +35,9 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     /**
-     * непонятно зачем return ... мы же должны просто поменять значение на новое
+     * @param index индекс заменяемого значения
+     * @param newValue новое значение для замены
+     * @return непонятно зачем return ... мы же должны просто поменять значение на новое
      */
     @Override
     public T set(int index, T newValue) {
@@ -47,8 +48,8 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     /**
-     * удаляем элемент по индексу, образец из примера
-     * уменьшаем размер массива
+     * @param index индекс необходимого элемента
+     * @return возвращаем старое значение (внезапно)
      */
     @Override
     public T remove(int index) {
@@ -68,7 +69,11 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     /**
-     * получаем элемент массива по индексу*/
+     * @param index индекс необходимого элемента
+     * @return возвращает элемент массива по индексу
+     * Objects.checkIndex(index, array.length);
+     * == if (index < 0 || index >= array.length) {throw new IndexOutOfBoundsException();}
+     */
     @Override
     public T get(int index) {
         Objects.checkIndex(index, size);
@@ -76,9 +81,9 @@ public class SimpleArrayList<T> implements List<T> {
     }
 
     /**
-     * возвращаем размер массива
-     * увеличиваем при добавлении элемента
-     * уменьшаем при удалении*/
+     *
+     * @return возвращает количество добавленных элементов != container.length
+     */
     @Override
     public int size() {
         return size;
@@ -87,22 +92,49 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
-            private int cursor;
+            /**
+             * количество изменений
+             * этот показатель всегда растет
+             */
+            private int expectedModCount = modCount;
+            /**
+             * указатель итератора
+             */
+            private int cursor = 0;
 
+            /**
+             * проверка след элемента в размере
+             * @return true/false
+             */
             @Override
             public boolean hasNext() {
-                return cursor != size;
+                return cursor < size;
             }
 
+            /**
+             *
+             * @return двигает указатель на ++ т возвращает элемент контейнера
+             *
+             * ConcurrentModificationException. Относится ко второму показателю - числу модификаций.
+             * Чтобы кинуть это исключение заводят отдельную переменную в итераторе expectedModCount = modCount
+             * и проверяют условие if (expectedModCount != modCount).
+             * Если условие выполнено, значит на момент итерирования была изменена коллекция, поэтому вылетает исключение.
+             * Это называется fail-fast поведение
+             *
+             * NoSuchElementException. Относится к первому показателю - количеству элементов.
+             * Если итератор "уперся", т.е. нет больше элементов, а клиент вызвал этот метод,
+             * то этим исключение мы ему подчеркиваем, что элементов больше нет.
+
+             */
             @Override
             public T next() {
-                int i = cursor;
-                if (i >= size) {
+                if (expectedModCount != modCount) {
+                    throw new ConcurrentModificationException();
+                }
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                cursor = i + 1;
-                lastRet = i;
-                return (T) container[i];
+                return (T) container[cursor++];
             }
 
         };
