@@ -32,7 +32,7 @@ public class SimpleArrayList<T> implements List<T> {
     /**
      * метод увеличивает размер массива в два раза
      */
-    void increaseLength() {
+    private void increaseLength() {
         container = Arrays.copyOf(container, container.length * 2);
     }
 
@@ -44,7 +44,7 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public T set(int index, T newValue) {
         Objects.checkIndex(index, size);
-        T oldValue = container[index];
+        T oldValue = get(index);
         container[index] = newValue;
         return oldValue;
 
@@ -57,8 +57,7 @@ public class SimpleArrayList<T> implements List<T> {
     @Override
     public T remove(int index) {
         Objects.checkIndex(index, size);
-        final Object[] es = container;
-        T oldValue = (T) es[index];
+        T oldValue = get(index);
         System.arraycopy(
                 container,
                 index + 1,
@@ -142,7 +141,7 @@ public class SimpleArrayList<T> implements List<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (T) container[cursor++];
+                return container[cursor++];
             }
 
         };
