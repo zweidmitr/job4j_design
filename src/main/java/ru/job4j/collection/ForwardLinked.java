@@ -8,7 +8,8 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     /**
      * метод добавляет новое значение в список,
-     * создает ноду, передвигает хвост
+     * создает ноду, передвигает tail
+     * добавляет ссылку на эту ноду в tail
      * @param value значение которое добавляем
      */
     public void add(T value) {
