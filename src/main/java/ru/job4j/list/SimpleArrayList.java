@@ -39,11 +39,12 @@ public class SimpleArrayList<T> implements List<T> {
     /**
      * @param index индекс заменяемого значения
      * @param newValue новое значение для замены
-     * @return непонятно зачем return ... мы же должны просто поменять значение на новое
+     * @return метод set() в стандартных реализациях возвращает значение, которое было ранее в коллекции
+     * и которое замнили новым, то вот его и возвращают, чтоб не потерять.
+     * Можно и не использовать.
      */
     @Override
     public T set(int index, T newValue) {
-        Objects.checkIndex(index, size);
         T oldValue = get(index);
         container[index] = newValue;
         return oldValue;
@@ -52,11 +53,11 @@ public class SimpleArrayList<T> implements List<T> {
 
     /**
      * @param index индекс необходимого элемента
-     * @return возвращаем старое значение (внезапно)
+     * @return в соответствии с сигнатурой метода возвращаем значение,
+     * исходя из логики и практики возвращаемое значение то, которое удаляем из коллекции.
      */
     @Override
     public T remove(int index) {
-        Objects.checkIndex(index, size);
         T oldValue = get(index);
         System.arraycopy(
                 container,
