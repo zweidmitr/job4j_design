@@ -22,7 +22,6 @@ public class ForwardLinked<T> implements Iterable<T> {
             tail = tail.next;
         }
         tail.next = node;
-
     }
 
     /**

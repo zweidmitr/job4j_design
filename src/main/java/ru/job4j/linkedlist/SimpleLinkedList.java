@@ -1,127 +1,98 @@
 package ru.job4j.linkedlist;
 
+import ru.job4j.collection.ForwardLinked;
+
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class SimpleLinkedList<E> implements List<E> {
-    private Node<E> fstNode;
-    private Node<E> lstNode;
+public class SimpleLinkedList<T> implements List<T> {
+    private Node<T> head;
+    private Node<T> tail;
     private int size = 0;
     private int modcount;
 
-    /**
-     * создается LinkedList
-     */
-    public SimpleLinkedList() {
-        this.lstNode = new Node<>(null, fstNode, null);
-        this.fstNode = new Node<>(null, null, lstNode);
-
-    }
 
     /**
-     * добавляем элемент value в LedList
-     * увеличиваем размер
+     *добавляем элемент в linkedList
+     * копируем последний элемент,
+     * создаем новую ноду, делая ее последней
+     * если лист пустой, добавляем эту ноду в head
+     * если значения уже есть, добавляем в последней копии (prev) ссылку на новый элемент
      * @param value значение определенного типа
      */
     @Override
-    public void add(E value) {
-        Node<E> prev = lstNode;
-        prev.setCurrentElement(value);
-        lstNode = new Node<>(null, prev, null);
-        prev.setNextElement(lstNode);
+    public void add(T value) {
+        Node<T> prev = tail;
+        tail = new Node<>(value,  null);
+        if (head == null) {
+            head = tail;
+        } else {
+            prev.next = tail;
+        }
         size++;
         modcount++;
     }
 
     /**
-     * получаем элемент по индексу, обойдя всю цепочку с самого начала
+     * получаем элемент по индексу, обойдя всю цепочку с head
+     * у предпоследнего элемента по ссылке полчаем наш элемент
      * @param index индекс необходимого значения
      * @return
      */
     @Override
-    public E get(int index) {
+    public T get(int index) {
         Objects.checkIndex(index, size);
-        Node<E> target = fstNode.getNextElement();
+        Node<T> node = head;
         for (int i = 0; i < index; i++) {
-            target = getNextElem(target);
+            node = node.getNext();
         }
-        return target.getCurrentElement();
-    }
-
-    /**
-     *
-     * @param target
-     * @return
-     */
-    private Node<E> getNextElem(Node<E> target) {
-        return target.getNextElement();
+        return node.getValue();
     }
 
     @Override
-    public Iterator<E> iterator() {
-        return new Iterator<E>() {
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
             private int expectedModCount = modcount;
             private int cursor = 0;
-            private Node<E> node = fstNode;
+            private Node<T> node = head;
 
             @Override
             public boolean hasNext() {
-
                 return cursor < size;
             }
 
             @Override
-            public E next() {
+            public T next() {
                 if (expectedModCount != modcount) {
                     throw new ConcurrentModificationException();
                 }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                Node<E> itrNode = node;
-                node = node.getNextElement();
+                Node<T> itrNode = node;
+                node = node.getNext();
                 cursor++;
-                return itrNode.getCurrentElement();
-//                return itrNode.getNextElement();
+                return itrNode.getValue();
             }
         };
     }
 
-    private class Node<E> {
-        private E currentElement;
-        private Node<E> nextElement;
-        private Node<E> prevElement;
+    private class Node<T> {
+        private T value;
+        private Node<T> next;
 
-        private Node(E currentElement, Node<E> prevElement, Node<E> nextElement) {
-            this.currentElement = currentElement;
-            this.prevElement = prevElement;
-            this.nextElement = nextElement;
+        private Node(T value, Node<T> next) {
+            this.value = value;
         }
 
-        public E getCurrentElement() {
-            return  currentElement;
+        public T getValue() {
+            return value;
         }
 
-        public void setCurrentElement(E currentElement) {
-            this.currentElement = currentElement;
-        }
-
-        public Node<E> getNextElement() {
-            return nextElement;
-        }
-
-        public void setNextElement(Node<E> nextElement) {
-            this.nextElement = nextElement;
-        }
-
-        public Node<E> getPrevElement() {
-            return prevElement;
-        }
-
-        public void setPrevElement(Node<E> prevElement) {
-            this.prevElement = prevElement;
+        public Node<T> getNext() {
+            return next;
         }
     }
 }
