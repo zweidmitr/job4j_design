@@ -10,6 +10,7 @@ public class ForwardLinked<T> implements Iterable<T> {
      * метод добавляет новое значение в список,
      * создает ноду, передвигает tail
      * добавляет ссылку на эту ноду в tail
+     *
      * @param value значение которое добавляем
      */
     public void add(T value) {
@@ -46,11 +47,8 @@ public class ForwardLinked<T> implements Iterable<T> {
             throw new NoSuchElementException();
         }
         Node<T> result = head;
-        if (head.next == null) {
-            head = null;
-        } else {
-            head = head.next;
-        }
+        head = (head.next == null) ? null : head.next;
+        result.next = null;
         return result.value;
     }
 
