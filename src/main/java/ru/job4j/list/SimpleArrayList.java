@@ -14,6 +14,10 @@ public class SimpleArrayList<T> implements List<T> {
         this.container = (T[]) new Object[capacity];
     }
 
+    public SimpleArrayList() {
+        this.container = (T[]) new Object[10];
+    }
+
     /**
      * добавляем в контейнер новое значение
      * проверяем надо ли увеличивать размер
