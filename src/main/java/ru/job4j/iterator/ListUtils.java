@@ -15,8 +15,8 @@ public class ListUtils {
      */
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> i = list.listIterator(index);
-        i.add(value);
+        ListIterator<T> iterator = list.listIterator(index);
+        iterator.add(value);
     }
 
     /**
@@ -29,8 +29,8 @@ public class ListUtils {
      */
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> i = list.listIterator(index + 1);
-        i.add(value);
+        ListIterator<T> iterator = list.listIterator(index + 1);
+        iterator.add(value);
 
     }
 
@@ -42,11 +42,11 @@ public class ListUtils {
      * @param <T>    тип элемента
      */
     public static <T> void removeIf(List<T> list, Predicate<T> filter) {
-        ListIterator<T> i = list.listIterator();
-        while (i.hasNext()) {
-            T elem = i.next();
+        ListIterator<T> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            T elem = iterator.next();
             if (filter.test(elem)) {
-                i.remove();
+                iterator.remove();
             }
         }
     }
@@ -60,11 +60,11 @@ public class ListUtils {
      * @param <T>    тип элемента
      */
     public static <T> void replaceIf(List<T> list, Predicate<T> filter, T value) {
-        ListIterator<T> i = list.listIterator();
-        while (i.hasNext()) {
-            T elem = i.next();
+        ListIterator<T> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            T elem = iterator.next();
             if (filter.test(elem)) {
-                i.set(value);
+                iterator.set(value);
             }
         }
 
@@ -72,15 +72,17 @@ public class ListUtils {
 
     /**
      * удаляет из списка те элементы, которые есть в elements.
-     *
-     * @param list список обрабатываемых значений / коллекция
+     * при проходе листИтератора, проверяем есть ли во втором списке нужные нам элементы
+     * @param list     список обрабатываемых значений / коллекция
      * @param elements коллекция элементов по которой проходим и элементы которой удаляем в первоначальном лисет
-     * @param <T> тип элемента
+     * @param <T>      тип элемента
      */
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        ListIterator<T> i = elements.listIterator();
-        while (i.hasNext()) {
-            list.remove(i.next());
+        ListIterator<T> iterator = list.listIterator();
+        while (iterator.hasNext()) {
+            if (elements.contains(iterator.next())) {
+                iterator.remove();
+            }
         }
 
     }
