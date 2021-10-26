@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 
 public class ForwardLinked<T> implements Iterable<T> {
     private Node<T> head;
+    private Node<T> tail;
 
     /**
      * метод добавляет новое значение в список,
@@ -46,6 +47,34 @@ public class ForwardLinked<T> implements Iterable<T> {
         head = (head.next == null) ? null : head.next;
         result.next = null;
         return result.value;
+    }
+
+    /**
+     * метод разворачивает односвязный список
+     * в первую очередь проверка на количество элементов в списке
+     * создаем переменную со ссылкой на второй (2) элемент (current)
+     * обнуляем ссылку самого первого (1) элемента head
+     * проходим циклом от второго элемента до конца
+     * делаем временную переменную на третий элемент (3)
+     * у current делаем ссылку на head (2) -> (1)
+     * сдвигаем весь цикл присваивая head ->(2), a current -> (3)
+     * повторить
+     * @return false || true
+     */
+    public boolean revert() {
+        if (head != null && head.next != null) {
+            tail = head;
+            Node<T> current = head.next;
+            head.next = null;
+            while (current != null) {
+                Node<T> next = current.next;
+                current.next = head;
+                head = current;
+                current = next;
+            }
+            return true;
+        }
+        return false;
     }
 
     @Override
