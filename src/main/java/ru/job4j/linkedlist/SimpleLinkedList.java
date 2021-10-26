@@ -15,17 +15,18 @@ public class SimpleLinkedList<T> implements List<T> {
 
 
     /**
-     *добавляем элемент в linkedList
+     * добавляем элемент в linkedList
      * копируем последний элемент,
      * создаем новую ноду, делая ее последней
      * если лист пустой, добавляем эту ноду в head
      * если значения уже есть, добавляем в последней копии (prev) ссылку на новый элемент
+     *
      * @param value значение определенного типа
      */
     @Override
     public void add(T value) {
         Node<T> prev = tail;
-        tail = new Node<>(value,  null);
+        tail = new Node<>(value, null);
         if (head == null) {
             head = tail;
         } else {
@@ -38,6 +39,7 @@ public class SimpleLinkedList<T> implements List<T> {
     /**
      * получаем элемент по индексу, обойдя всю цепочку с head
      * у предпоследнего элемента по ссылке полчаем наш элемент
+     *
      * @param index индекс необходимого значения
      * @return
      */
@@ -60,14 +62,14 @@ public class SimpleLinkedList<T> implements List<T> {
 
             @Override
             public boolean hasNext() {
+                if (expectedModCount != modcount) {
+                    throw new ConcurrentModificationException();
+                }
                 return cursor < size;
             }
 
             @Override
             public T next() {
-                if (expectedModCount != modcount) {
-                    throw new ConcurrentModificationException();
-                }
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
