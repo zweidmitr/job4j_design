@@ -28,11 +28,7 @@ public class ForwardLinked<T> implements Iterable<T> {
 
     public void addFirst(T value) {
         Node<T> node = new Node<T>(value, null);
-        if (head == null) {
-            head = node;
-            return;
-        }
-        head = new Node<>(value, head);
+        head = (head == null) ? node : new Node<>(value, head);
     }
 
     /**
@@ -40,6 +36,7 @@ public class ForwardLinked<T> implements Iterable<T> {
      * сперва проверяем есть ли вообще head, если есть следующая нода(2),
      * то делаем head его же ссылко на (2) элемент
      * в удаляемой node надо обнулить ссылку next, которая в ней содержится
+     *
      * @return возвращаем значение удаленного элемента
      */
     public T deleteFirst() {
