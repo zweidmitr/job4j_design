@@ -26,7 +26,8 @@ public class ZB {
         System.out.println(111111111 << 2);
         System.out.println(111111111 << 3);
         System.out.println("---------------------");
-        System.out.println(35 >> 2);
+        System.out.println(78 >>> 3);
+        System.out.println("---------------------");
 
     }
 
