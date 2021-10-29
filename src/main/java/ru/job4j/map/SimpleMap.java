@@ -13,12 +13,12 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean put(K key, V value) {
         boolean result = true;
+        expand();
         int keyIndex = indexFor(hash(key));
         if (table[keyIndex] != null) {
             result = false;
         }
         if (result) {
-            expand();
             table[keyIndex] = new MapEntry<>(key, value);
             modCount++;
             size++;
@@ -29,11 +29,20 @@ public class SimpleMap<K, V> implements Map<K, V> {
     /**
      * метод проверяет размер массива
      * и если загруженность массива превышает 0,75 то увеличиваем *2
+     * необходимо пересоздать массив и переписать туда все элементы
+     * т.е. если раньше был элемент, получить у него ключ
+     * и еще раз получить индекс через хэш и запихнуть в новую таблицу значение
      */
     private void expand() {
-        if (size / capacity >= LOAD_FACTOR) {
-            int newSize = table.length * 2;
-            table = Arrays.copyOf(table, newSize);
+        if (size >= capacity * LOAD_FACTOR) {
+            MapEntry<K, V>[] temp = table;
+            table = new MapEntry[table.length * 2];
+            for (MapEntry<K, V> bucket : temp) {
+                if (bucket != null) {
+                    MapEntry<K, V> elem;
+                    table[indexFor(hash(bucket.key))] = bucket;
+                }
+            }
             modCount++;
         }
     }
