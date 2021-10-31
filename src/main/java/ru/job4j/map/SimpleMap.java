@@ -28,13 +28,15 @@ public class SimpleMap<K, V> implements Map<K, V> {
 
     /**
      * метод проверяет размер массива
-     * и если загруженность массива превышает 0,75 то увеличиваем *2
+     * и если загруженность массива превышает 0,75
+     * то увеличиваем *2 length and capacity
      * необходимо пересоздать массив и переписать туда все элементы
      * т.е. если раньше был элемент, получить у него ключ
      * и еще раз получить индекс через хэш и запихнуть в новую таблицу значение
      */
     private void expand() {
         if (size >= capacity * LOAD_FACTOR) {
+            capacity = capacity * 2;
             MapEntry<K, V>[] temp = table;
             table = new MapEntry[table.length * 2];
             for (MapEntry<K, V> bucket : temp) {
