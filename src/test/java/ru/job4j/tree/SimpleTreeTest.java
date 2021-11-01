@@ -41,4 +41,33 @@ public class SimpleTreeTest {
         assertFalse(tree.add(2, 6));
     }
 
+    @Test
+    public void whenOneParentThreeChild() {
+        Tree<Integer> tree = new SimpleTree<>(10);
+        tree.add(10, 11);
+        tree.add(10, 12);
+        tree.add(10, 13);
+        assertFalse(tree.isBinary());
+    }
+
+    @Test
+    public void whenOneParentOneChild() {
+        Tree<Integer> tree = new SimpleTree<>(10);
+        tree.add(10, 11);
+        assertTrue(tree.isBinary());
+    }
+
+    @Test
+    public void whenOneParentMoreChild() {
+        Tree<Integer> tree = new SimpleTree<>(10);
+        tree.add(10, 11);
+        tree.add(10, 12);
+        tree.add(11, 13);
+        tree.add(13, 14);
+        tree.add(14, 15);
+        tree.add(14, 16);
+        tree.add(14, 17);
+        assertFalse(tree.isBinary());
+    }
+
 }

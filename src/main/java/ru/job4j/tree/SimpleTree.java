@@ -3,6 +3,7 @@ package ru.job4j.tree;
 import java.util.LinkedList;
 import java.util.Optional;
 import java.util.Queue;
+import java.util.function.Predicate;
 
 public class SimpleTree<E> implements Tree<E> {
 
@@ -38,26 +39,48 @@ public class SimpleTree<E> implements Tree<E> {
     }
 
     /**
-     * Этот класс использует алгоритм обхода в ширину.
-     * В этом задании мы не будем касаться устройства работы этого алгоритма.
-     * Вам нужно воспользоваться результатом его работы для реализации метода add.
+     * проверяем есть ли в дереве элемент с таким значение...
+     * условие - значение элемента = значению для проверки
      *
      * @param value
-     * @return
+     * @return если находим элемент возвращаем его через Optional иначе Optional.empty()
      */
     @Override
     public Optional<Node<E>> findBy(E value) {
+        return findByPredicate(element -> element.value.equals(value));
+    }
+
+    /**
+     * проверяет дерево на бинарность, условие - у одного родителя от 0 до 2-х потомков
+     *
+     * @return если размер листа больше 2-х ... true / false
+     */
+    @Override
+    public boolean isBinary() {
+        return findByPredicate(element -> element.children.size() > 2).isEmpty();
+    }
+
+    /**
+     * Этот класс использует алгоритм обхода в ширину.
+     * В этом задании мы не будем касаться устройства работы этого алгоритма.
+     * Вам нужно воспользоваться результатом его работы для реализации метода findBy and isBinary.
+     *
+     * @param condition - передаем предикат с необходимым условием
+     * @return
+     */
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
         Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> element = data.poll();
-            if (element.value.equals(value)) {
+            if (condition.test(element)) {
                 rsl = Optional.of(element);
                 break;
             }
             data.addAll(element.children);
         }
+
         return rsl;
     }
 }
