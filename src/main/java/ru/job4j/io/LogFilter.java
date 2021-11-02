@@ -13,7 +13,7 @@ public class LogFilter {
         String result = "";
         try (BufferedReader in = new BufferedReader(new FileReader("log.txt"))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                if (line.contains("404")) {
+                if (line.contains("\" 404 ")) {
                     result = result + System.lineSeparator() + line;
                 }
             }
