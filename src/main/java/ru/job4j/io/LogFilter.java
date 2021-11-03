@@ -8,7 +8,9 @@ import java.util.List;
 public class LogFilter {
     public static void main(String[] args) {
         List<String> log = filter("log.txt");
-        System.out.println(log);
+        for (String s : log) {
+            System.out.println(s);
+        }
     }
 
     public static List<String> filter(String file) {
