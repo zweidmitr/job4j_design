@@ -2,19 +2,21 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LogFilter {
     public static void main(String[] args) {
-        String strings = filter();
-        System.out.println(strings);
+        List<String> log = filter("log.txt");
+        System.out.println(log);
     }
 
-    public static String filter() {
-        String result = "";
-        try (BufferedReader in = new BufferedReader(new FileReader("log.txt"))) {
+    public static List<String> filter(String file) {
+        List<String> result = new ArrayList<>();
+        try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             for (String line = in.readLine(); line != null; line = in.readLine()) {
-                if (line.contains("\" 404 ")) {
-                    result = result + System.lineSeparator() + line;
+                if (line.contains(" 404 ")) {
+                    result.add(line);
                 }
             }
         } catch (Exception e) {
