@@ -10,7 +10,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment() {
-        String path = "C:\\projects\\job4j_design\\pair_without_comment.properties";
+        String path = "./pair_without_comment.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name"), is("Dmitrii"));
@@ -19,7 +19,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithComment() {
-        String path = "C:\\projects\\job4j_design\\pair_with_comment.properties";
+        String path = "./pair_with_comment.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value("name"), is("Dmitrii"));
