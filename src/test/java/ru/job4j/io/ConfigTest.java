@@ -25,4 +25,20 @@ public class ConfigTest {
         assertThat(config.value("name"), is("Dmitrii"));
         assertThat(config.value("surname"), is("Zwei"));
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void whenAlarmTest() {
+        String path = "./pair_with_alarm.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
+    @Test
+    public void whenEmptyLine() {
+        String path = "./pair_with_empty_line.properties";
+        Config config = new Config(path);
+        config.load();
+        assertThat(config.value("name"), is("Dmitrii"));
+        assertThat(config.value("surname"), is("Zwei"));
+    }
 }
