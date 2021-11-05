@@ -33,6 +33,13 @@ public class ConfigTest {
         config.load();
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void whenAlarmTestValue() {
+        String path = "./data/pair_with_alarm_value.properties";
+        Config config = new Config(path);
+        config.load();
+    }
+
     @Test
     public void whenEmptyLine() {
         String path = "./data/pair_with_empty_line.properties";

@@ -24,10 +24,18 @@ public class Config {
                 if (line.contains("#") || line.length() == 0) {
                     continue;
                 }
+                if (!line.contains("=")) {
+                    tempBug = true;
+                    break;
+                }
                 array = line.split("=");
+                if (array.length != 2) {
+                    tempBug = true;
+                    break;
+                }
                 String key = array[0];
                 String value = array[1];
-                if (array[0].length() == 0 || !line.contains("=") || array.length != 2) {
+                if (array[0].length() == 0 || array[1].length() == 0) {
                     tempBug = true;
                     break;
                 }
