@@ -19,22 +19,19 @@ public class Config {
         boolean tempBug = false;
         try (BufferedReader reader = new BufferedReader(new FileReader(this.path))) {
             String line;
-            String name = "";
-            String surname = "";
+            String[] array;
             while ((line = reader.readLine()) != null) {
                 if (line.contains("#") || line.length() == 0) {
                     continue;
                 }
-                line = line.replaceAll("\\s+", "");
-                if (line.startsWith("name")) {
-                    name = line.substring(5);
-                    values.put("name", name);
-                } else if (line.startsWith("surname")) {
-                    surname = line.substring(8);
-                    values.put("surname", surname);
-                } else {
+                array = line.split("=");
+                String key = array[0];
+                String value = array[1];
+                if (array[0].length() == 0 || !line.contains("=") || array.length != 2) {
                     tempBug = true;
+                    break;
                 }
+                values.put(key, value);
             }
         } catch (Exception e) {
             e.printStackTrace();
