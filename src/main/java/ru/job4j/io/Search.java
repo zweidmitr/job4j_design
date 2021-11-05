@@ -10,8 +10,19 @@ import java.util.function.Predicate;
 public class Search {
 
     public static void main(String[] args) throws IOException {
-        Path start = Paths.get(".");
-        search(start, p -> p.toFile().getName().endsWith("js")).forEach(System.out::println);
+        if (args.length == 0) {
+            throw new IllegalArgumentException("arguments  is null.");
+        }
+        if (args[0] == null) {
+            throw new IllegalArgumentException("Root folder is null.");
+        }
+        if (args.length == 1 || args[1] == null) {
+            throw new IllegalArgumentException("check the second argument.");
+        }
+
+        Path start = Paths.get(args[0]);
+        String tempS = args[1];
+        search(start, p -> p.toFile().getName().endsWith(tempS)).forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
