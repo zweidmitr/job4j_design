@@ -5,11 +5,21 @@ import java.nio.file.FileVisitResult;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.HashSet;
+import java.util.Set;
 
-public class DuplicatesVisitor  extends SimpleFileVisitor<Path> {
+import static java.nio.file.FileVisitResult.CONTINUE;
+
+public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
+    Set<FileProperties> files = new HashSet<>();
+    Set<FileProperties> duplicates = new HashSet<>();
+
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        System.out.println(file.getFileName());
-        return super.visitFile(file, attrs);
+        FileProperties element = new FileProperties(attrs.size(), file.getFileName().toString());
+        if (!files.add(element)) {
+            duplicates.add(element);
+        }
+        return CONTINUE;
     }
 }
