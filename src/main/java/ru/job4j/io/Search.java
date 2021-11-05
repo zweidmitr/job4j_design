@@ -11,7 +11,6 @@ public class Search {
 
     public static void main(String[] args) throws IOException {
         Path start = Paths.get(".");
-//        Files.walkFileTree(start, new PrintFiles());
         search(start, p -> p.toFile().getName().endsWith("js")).forEach(System.out::println);
     }
 
