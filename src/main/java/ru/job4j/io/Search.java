@@ -10,14 +10,8 @@ import java.util.function.Predicate;
 public class Search {
 
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("arguments  is null.");
-        }
-        if (args[0] == null) {
-            throw new IllegalArgumentException("Root folder is null.");
-        }
-        if (args.length == 1 || args[1] == null) {
-            throw new IllegalArgumentException("check the second argument.");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("check arguments.");
         }
 
         Path start = Paths.get(args[0]);
