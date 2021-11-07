@@ -1,5 +1,6 @@
 package ru.job4j.io;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,6 +13,11 @@ public class Search {
     public static void main(String[] args) throws IOException {
         if (args.length != 2) {
             throw new IllegalArgumentException("check arguments.");
+        }
+        File file = new File(args[0]);
+
+        if (!file.exists() || !file.isDirectory()) {
+            throw new IllegalArgumentException("not exist or not directory, check path");
         }
 
         Path start = Paths.get(args[0]);
