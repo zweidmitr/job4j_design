@@ -12,23 +12,16 @@ public class ArgsName {
     }
 
     private void parse(String[] args) {
-        boolean tempBug = false;
         if (args.length == 0) {
             throw new IllegalArgumentException("alarm");
         }
         for (String element : args) {
             if (!element.contains("=")) {
-                tempBug = true;
-                break;
+                throw new IllegalArgumentException("alarm");
             }
             String[] tempArray = element.split("=");
-            if (tempArray.length != 2) {
-                tempBug = true;
-                break;
-            }
-            if (tempArray[0] == null || tempArray[1] == null) {
-                tempBug = true;
-                break;
+            if (tempArray.length != 2 || tempArray[0] == null || tempArray[0].trim().isEmpty() || tempArray[1] == null) {
+                throw new IllegalArgumentException("alarm");
             }
             String key = tempArray[0];
             if (key.startsWith("-")) {
@@ -37,11 +30,6 @@ public class ArgsName {
             String value = tempArray[1];
             values.put(key, value);
         }
-
-        if (tempBug) {
-            throw new IllegalArgumentException("alarm");
-        }
-
     }
 
     public static ArgsName of(String[] args) {

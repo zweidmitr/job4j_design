@@ -29,4 +29,25 @@ public class ArgsNameTest {
     public void whenWrongSomeArgument() {
         ArgsName jvm = ArgsName.of(new String[]{"-enconding=UTF-8", "-Xmx="});
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenWrongSomeKey() {
+        ArgsName jvm = ArgsName.of(new String[]{"=UTF-8"});
+    }
+
+    @Test
+    public void whenGetFirstReorderWithoutHyphen() {
+        ArgsName jvm = ArgsName.of(new String[]{"encoding=UTF-8", "Xmx=512"});
+        assertThat(jvm.get("Xmx"), is("512"));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenGetFirstReorderWithoutEquals() {
+        ArgsName jvm = ArgsName.of(new String[]{"-enconding--UTF-8", "Xmx=512"});
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenGetFirstReorderWithTwoEquals() {
+        ArgsName jvm = ArgsName.of(new String[]{"-enconding==UTF-8", "Xmx=512"});
+    }
 }
