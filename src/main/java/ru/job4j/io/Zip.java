@@ -33,7 +33,7 @@ public class Zip {
     }
 
     public static void main(String[] args) throws IOException {
-//        packSingleFile(new File("./pom.xml"), new File("./pom.zip"));
+        packSingleFile(new File("./pom.xml"), new File("./pom.zip"));
         ArgsName keys = ArgsName.of(args);
         if (keys.getSize() != 3) {
             throw new IllegalArgumentException("check argument size");
