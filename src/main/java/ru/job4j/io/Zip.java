@@ -21,23 +21,11 @@ public class Zip {
         }
     }
 
-    public static void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) throws IOException {
-        packSingleFile(new File("./pom.xml"), new File("./pom.zip"));
+        checkArgs(args);
         ArgsName keys = ArgsName.of(args);
-        if (keys.getSize() != 3) {
-            throw new IllegalArgumentException("check argument size");
-        }
+        checkSize(keys, 3);
+
         String directory = keys.get("d");
         String exclude = keys.get("e");
         String output = keys.get("o");
@@ -51,7 +39,7 @@ public class Zip {
         packFiles(dirList, new File(output));
     }
 
-    private static boolean checkDir(String path) {
+    private static void checkDir(String path) {
         File file = new File(path);
         if (!file.exists()) {
             throw new IllegalArgumentException(String.format("Not exist: %s", file.getAbsoluteFile()));
@@ -59,6 +47,23 @@ public class Zip {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory: %s", file.getAbsoluteFile()));
         }
-        return true;
+    }
+
+    private static void checkSize(ArgsName keys, int count) {
+        if (keys.getSize() != count) {
+            throw new IllegalArgumentException("check argument size");
+        }
+    }
+
+    private static boolean checkArgs(String[] args) {
+        boolean result = false;
+        for (String s : args) {
+            if (s.contains("-d") || s.contains("-e") || s.contains("-o")) {
+                result = true;
+            } else {
+                throw new IllegalArgumentException("check String[] args");
+            }
+        }
+        return result;
     }
 }
