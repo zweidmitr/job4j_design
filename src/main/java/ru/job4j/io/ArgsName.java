@@ -7,6 +7,16 @@ public class ArgsName {
 
     private final Map<String, String> values = new HashMap<>();
 
+    private String[] args;
+
+    public String[] getArgs() {
+        return args;
+    }
+
+    public void setArgs(String[] args) {
+        this.args = args;
+    }
+
     public int getSize() {
         return values.size();
     }
@@ -38,6 +48,7 @@ public class ArgsName {
 
     public static ArgsName of(String[] args) {
         ArgsName names = new ArgsName();
+        names.setArgs(args);
         names.parse(args);
         return names;
     }

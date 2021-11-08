@@ -23,6 +23,7 @@ public class CSVReader {
     }
 
     public static void handle(ArgsName argsName) throws Exception {
+        checkArgs(argsName.getArgs());
         String path = argsName.get("path");
         String delimiter = argsName.get("delimiter");
         String out = argsName.get("out");
@@ -59,16 +60,29 @@ public class CSVReader {
         }
         if (out.equals("stdout")) {
             System.out.print(builder);
+        } else {
+            try (PrintWriter writer = new PrintWriter(new FileWriter(out))) {
+                writer.print(builder);
+            }
         }
-        try (PrintWriter writer = new PrintWriter(new FileWriter(out))) {
-            writer.print(builder);
+    }
+
+    private static boolean checkArgs(String[] args) {
+        boolean result = false;
+        for (String s : args) {
+            if (s.contains("-path") || s.contains("-delimiter") || s.contains("-out") || s.contains("-filter")) {
+                result = true;
+            } else {
+                throw new IllegalArgumentException("check String[] args");
+            }
         }
+        return result;
     }
 
     private static void checkPath(String path) {
         File file = new File(path);
         if (!file.exists()) {
-            throw new IllegalArgumentException("ALARM, not exist or not directory, check path!");
+            throw new IllegalArgumentException("ALARM, not exist, check path!");
         }
     }
 }
