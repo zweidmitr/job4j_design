@@ -29,26 +29,18 @@ public class ConsoleChat {
         Scanner scanner = new Scanner(System.in);
         String answer = scanner.nextLine();
         check(answer);
-        while (marker.equals("продолжить")) {
-            check(answer);
-            if (marker.equals("закончить")) {
-                break;
-            }
-            while (!marker.equals("стоп") || !marker.equals("закончить")) {
-
-                if (marker.equals("стоп") || marker.equals("закончить")) {
-                    break;
-                }
+        boolean temp = true;
+        while (!marker.equals(OUT)) {
+            if (temp) {
                 System.out.println(getRandom());
-                answer = scanner.nextLine();
-                check(answer);
             }
-            while (!marker.equals("продолжить") || !answer.equals("закончить")) {
-                answer = scanner.nextLine();
-                check(answer);
-                if (answer.equals("продолжить") || answer.equals("закончить")) {
-                    break;
-                }
+            answer = scanner.nextLine();
+            check(answer);
+            if (marker.equals(STOP)) {
+                temp = false;
+            }
+            if (marker.equals(CONTINUE)) {
+                temp = true;
             }
         }
         saveLog(log);
@@ -56,11 +48,11 @@ public class ConsoleChat {
 
     private void check(String answer) {
         log.add(answer);
-        if (answer.equals("закончить")) {
+        if (answer.equals(OUT)) {
             marker = OUT;
-        } else if (answer.equals("продолжить")) {
+        } else if (answer.equals(CONTINUE)) {
             marker = CONTINUE;
-        } else if (answer.equals("стоп")) {
+        } else if (answer.equals(STOP)) {
             marker = STOP;
         }
     }
@@ -93,8 +85,8 @@ public class ConsoleChat {
     }
 
     public static void main(String[] args) {
-        ConsoleChat cc = new ConsoleChat("C:\\projects\\job4j_design\\src\\data\\text.txt",
-                "C:\\projects\\job4j_design\\src\\data\\log.txt");
+        ConsoleChat cc = new ConsoleChat("./src/data/text.txt",
+                "./src/data/log.txt");
         cc.run();
     }
 }
