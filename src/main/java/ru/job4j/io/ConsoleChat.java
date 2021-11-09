@@ -30,16 +30,16 @@ public class ConsoleChat {
         String answer = scanner.nextLine();
         check(answer);
         boolean temp = true;
-        while (!marker.equals(OUT)) {
+        while (!OUT.equals(marker)) {
             if (temp) {
                 System.out.println(getRandom());
             }
             answer = scanner.nextLine();
             check(answer);
-            if (marker.equals(STOP)) {
+            if (STOP.equals(marker)) {
                 temp = false;
             }
-            if (marker.equals(CONTINUE)) {
+            if (CONTINUE.equals(marker)) {
                 temp = true;
             }
         }
@@ -48,11 +48,11 @@ public class ConsoleChat {
 
     private void check(String answer) {
         log.add(answer);
-        if (answer.equals(OUT)) {
+        if (OUT.equals(answer)) {
             marker = OUT;
-        } else if (answer.equals(CONTINUE)) {
+        } else if (CONTINUE.equals(answer)) {
             marker = CONTINUE;
-        } else if (answer.equals(STOP)) {
+        } else if (STOP.equals(answer)) {
             marker = STOP;
         }
     }
