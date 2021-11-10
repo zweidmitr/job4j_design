@@ -3,15 +3,21 @@ package ru.job4j.serelization;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.util.Arrays;
+
 public class Target {
     private final String name;
     private final boolean desire;
     private final int daysCount;
+    private final int[] courseSteps;
+    private final Job4j courseName;
 
-    public Target(String name, boolean desire, int daysCount) {
+    public Target(String name, boolean desire, int daysCount, int[] courseSteps, Job4j courseName) {
         this.name = name;
         this.desire = desire;
         this.daysCount = daysCount;
+        this.courseSteps = courseSteps;
+        this.courseName = courseName;
     }
 
     @Override
@@ -20,29 +26,8 @@ public class Target {
                 + "name='" + name + '\''
                 + ", desire=" + desire
                 + ", daysCount=" + daysCount
+                + ", courseSteps=" + Arrays.toString(courseSteps)
+                + ", courseName=" + courseName
                 + '}';
-    }
-
-    public static void main(String[] args) {
-        final Target target = new Target("java work", true, 141);
-
-        /**
-         * преобразуем объект target в json стопку
-         */
-        final Gson gson = new GsonBuilder().create();
-        System.out.println(gson.toJson(target));
-
-        /**
-         * модифициуем json стопку
-         */
-
-        final String targetJson =
-                "{"
-                        + "\"desire\":true,"
-                        + "\"name\":javaWork,"
-                        + "\"daysCount\": 191"
-                        + "}";
-        final Target targetMod = gson.fromJson(targetJson, Target.class);
-        System.out.println(targetMod);
     }
 }
