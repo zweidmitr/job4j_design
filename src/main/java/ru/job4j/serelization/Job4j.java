@@ -9,8 +9,8 @@ public class Job4j {
 
     @Override
     public String toString() {
-        return "Job4j{" +
-                "courseName='" + courseName + '\'' +
-                '}';
+        return "Job4j{"
+                + "courseName='" + courseName + '\''
+                + '}';
     }
 }
