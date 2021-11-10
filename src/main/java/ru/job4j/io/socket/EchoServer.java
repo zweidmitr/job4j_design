@@ -1,15 +1,20 @@
 package ru.job4j.io.socket;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.charset.StandardCharsets;
 
 public class EchoServer {
-    public static void main(String[] args) throws IOException {
+
+    public static final Logger LOG = LoggerFactory.getLogger(EchoServer.class.getName());
+
+    public static void main(String[] args) {
         /**
          *ServerSocket создает сервер. Чтобы клиент мог узнать, где находится сервер ему нужен адрес и порт.
          * По аналогии с людьми мы обращаемся по имени, чтобы начать разговор.
@@ -53,17 +58,29 @@ public class EchoServer {
                      */
                     send(out, builder.toString());
                     out.flush();
+                } catch (Exception e) {
+                    LOG.error("ALARM we have problems (reading or writing)!!", e);
                 }
             }
+        } catch (Exception e) {
+            LOG.error("ALARM we have problems with ServerSocket !!", e);
         }
     }
 
-    private static void send(OutputStream out, String request) throws IOException {
+    private static void send(OutputStream out, String request) {
         if (request != null && !request.isEmpty()) {
             if (request.contains("Hello")) {
-                out.write(("Hello, world!!!.\r\n\r\n").getBytes());
+                try {
+                    out.write(("Hello, world!!!.\r\n\r\n").getBytes());
+                } catch (Exception e) {
+                    LOG.error("Alarm send errors", e);
+                }
             } else {
-                out.write(("What??\r\n\r\n").getBytes());
+                try {
+                    out.write(("What??\r\n\r\n").getBytes());
+                } catch (Exception e) {
+                    LOG.error("Alarm send errors", e);
+                }
             }
         }
     }

@@ -26,5 +26,10 @@ public class UsageLog4j {
         LOG.debug("temp on PC show {}, but thermometer show {}", fTemp, temp);
         LOG.debug("is it magic? {} you say {}...", isItMagic, abracadabra);
 
+        try {
+            throw new Exception("Not supported code");
+        } catch (Exception e) {
+            LOG.error("Exception in log example", e);
+        }
     }
 }
