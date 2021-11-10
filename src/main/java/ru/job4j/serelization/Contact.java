@@ -4,33 +4,21 @@ import java.io.*;
 import java.nio.file.Files;
 
 public class Contact implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private final int zipCode;
     private final String phone;
 
-    public Contact(int zipCode, String phone) {
+    public Contact(String phone) {
         this.phone = phone;
-        this.zipCode = zipCode;
-    }
-
-    public int getZipCode() {
-        return zipCode;
-    }
-
-    public String getPhone() {
-        return phone;
     }
 
     @Override
     public String toString() {
         return "Contact{"
-                + "zipCode=" + zipCode
-                + ", phone='" + phone + '\''
+                + "phone='" + phone + '\''
                 + '}';
     }
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-        final Contact contact = new Contact(12356, "+7 (111) 111-1111");
+        final Contact contact = new Contact("+7 (111) 111-1111");
         /**
          * Запись объекта во временный файл, который удалится системой
          */
@@ -47,6 +35,5 @@ public class Contact implements Serializable {
             final Contact contactFromFile = (Contact) ois.readObject();
             System.out.println(contactFromFile);
         }
-
     }
 }
