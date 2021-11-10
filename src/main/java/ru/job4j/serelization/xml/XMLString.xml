@@ -1,0 +1,10 @@
+<?xml version="1" encoding="UTF-8" ?>
+<target desire="true">
+    <name>java</name>
+    <daysCount>123</daysCount>
+    <courseName name= "https://job4j.ru/profile"/>
+    <steps>
+        <step>1</step>
+        <step>2</step>
+    </steps>
+</target>
