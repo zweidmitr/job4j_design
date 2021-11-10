@@ -2,10 +2,7 @@ package ru.job4j.io.scanner;
 
 import ru.job4j.io.ArgsName;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -14,13 +11,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class CSVReader {
-
-    public static void main(String[] args) throws Exception {
-        var path = "C:\\projects\\job4j_design\\src\\data\\csvTest.csv";
-        ArgsName argsName = ArgsName.of(new String[]{
-                "-path=" + path, "-delimiter=;", "-out=" + "stdout", "-filter=Внешний идентификатор для импорта,Название"});
-        handle(argsName);
-    }
 
     public static void handle(ArgsName argsName) throws Exception {
         checkArgs(argsName.getArgs());
@@ -33,31 +23,15 @@ public class CSVReader {
         String[] filter = argsName.get("filter").split(",");
 
         String header = String.join(delimiter, filter);
-        String ls = System.lineSeparator();
         StringBuilder builder = new StringBuilder();
-        builder.append(header).append(ls);
+        builder.append(header).append(System.lineSeparator());
         try (Scanner scanner = new Scanner(filePath)) {
-            String firstLine = scanner.nextLine();
-            List<String> columns = Arrays.asList(firstLine.split(delimiter));
-            int[] indexes = new int[filter.length];
-            for (int i = 0; i < filter.length; i++) {
-                int index = columns.indexOf(filter[i]);
-                if (index == -1) {
-                    throw new NoSuchElementException("filter is not correct");
-                }
-                indexes[i] = index;
-            }
-            String[] strings = new String[indexes.length];
-            String result;
-            while (scanner.hasNextLine()) {
-                String[] nextLine = scanner.nextLine().split(delimiter);
-                for (int i = 0; i < indexes.length; i++) {
-                    strings[i] = nextLine[indexes[i]];
-                }
-                result = String.join(delimiter, strings);
-                builder.append(result).append(ls);
-            }
+            builder = parsing(scanner, builder, filter, delimiter);
         }
+        print(out, builder);
+    }
+
+    private static void print(String out, StringBuilder builder) throws IOException {
         if (out.equals("stdout")) {
             System.out.print(builder);
         } else {
@@ -67,16 +41,34 @@ public class CSVReader {
         }
     }
 
-    private static boolean checkArgs(String[] args) {
-        boolean result = false;
+    private static StringBuilder parsing(Scanner scanner, StringBuilder builder, String[] filter, String delimiter) {
+        List<String> columns = Arrays.asList(scanner.nextLine().split(delimiter));
+        int[] indexes = new int[filter.length];
+        for (int i = 0; i < filter.length; i++) {
+            int index = columns.indexOf(filter[i]);
+            if (index == -1) {
+                throw new NoSuchElementException("filter is not correct");
+            }
+            indexes[i] = index;
+        }
+        String[] strings = new String[indexes.length];
+        while (scanner.hasNextLine()) {
+            String[] nextLine = scanner.nextLine().split(delimiter);
+            for (int i = 0; i < indexes.length; i++) {
+                strings[i] = nextLine[indexes[i]];
+            }
+            String result = String.join(delimiter, strings);
+            builder.append(result).append(System.lineSeparator());
+        }
+        return builder;
+    }
+
+    private static void checkArgs(String[] args) {
         for (String s : args) {
-            if (s.contains("-path") || s.contains("-delimiter") || s.contains("-out") || s.contains("-filter")) {
-                result = true;
-            } else {
+            if (!s.contains("-path") && !s.contains("-delimiter") && !s.contains("-out") && !s.contains("-filter")) {
                 throw new IllegalArgumentException("check String[] args");
             }
         }
-        return result;
     }
 
     private static void checkPath(String path) {
