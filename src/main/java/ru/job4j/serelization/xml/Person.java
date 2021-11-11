@@ -1,10 +1,8 @@
 package ru.job4j.serelization.xml;
 
-import javax.xml.bind.JAXB;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
+import javax.xml.bind.*;
 import javax.xml.bind.annotation.*;
+import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Arrays;
 
@@ -44,18 +42,29 @@ public class Person {
                 + '}';
     }
 
-    public static void main(String[] args) throws JAXBException {
+    public static void main(String[] args) throws Exception {
         final Person person = new Person(false, 30, new Contact("11-111"), "Worker", "Married");
+        /* Получаем контекст для доступа к АПИ */
         JAXBContext context = JAXBContext.newInstance(Person.class);
+        /* Создаем сериализатор */
         Marshaller marshaller = context.createMarshaller();
+        /* Указываем, что нам нужно форматирование */
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String xml = "";
 
         try (StringWriter writer = new StringWriter()) {
+            /* Сериализуем */
             marshaller.marshal(person, writer);
-            String result = writer.getBuffer().toString();
+            xml = writer.getBuffer().toString();
+            System.out.println(xml);
+        }
+
+        /* Для десерализации нам нужно создать десериализатор */
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        try (StringReader reader = new StringReader(xml)) {
+            /* Десериализуем */
+            Person result = (Person) unmarshaller.unmarshal(reader);
             System.out.println(result);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
