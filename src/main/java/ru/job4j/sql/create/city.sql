@@ -26,10 +26,29 @@ insert into city(name,continent_id) values ('canberra',5);
 insert into city(name,continent_id) values ('sydney',5);
 insert into city(name,continent_id) values ('cairo',4);
 
-select * from city join continent count on city.continent_id = count.id;
-select city.name as ci from city join continent on city.continent_id = continent.id;
-select city.name as ci, continent.name as cont from city join continent on city.continent_id = continent.id;
-select city.name as ci, continent.name as cont from city join continent on city.continent_id = continent.id
+select *
+from city
+join continent count
+on city.continent_id = count.id;
+
+select city.name as ci
+from city
+join continent
+on city.continent_id = continent.id;
+
+select city.name as ci, continent.name as cont
+from city
+join continent
+on city.continent_id = continent.id;
+
+select city.name as ci, continent.name as cont
+from city
+join continent
+on city.continent_id = continent.id
 where continent.name = 'australia';
-select continent.name as continent from city join continent on city.continent_id = continent.id
+
+select continent.name as continent
+from city
+join continent
+on city.continent_id = continent.id
 where city.name = 'spb';
