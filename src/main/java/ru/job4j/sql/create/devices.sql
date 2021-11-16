@@ -47,12 +47,22 @@ insert into devices_people(device_id, people_id) values (9,2);
 insert into devices_people(device_id, people_id) values (10,3);
 select * from devices_people;
 
+-- 3. Используя агрегатные функции вывести среднюю цену устройств.
 select d.name, avg(d.price) from devices as d
 group by d.name;
 
+-- 4. Используя группировку вывести для каждого человека среднюю цену его устройств.
 select p.name, avg(d.price)
 from devices_people as dp
 join people p on dp.people_id = p.id
 join devices d on dp.device_id = d.id
-where d.price >5000
 group by p.name;
+
+-- 5. Дополнить запрос п.4. условием, что средняя стоимость устройств должна быть больше 5000.
+select p.name, avg(d.price)
+from devices_people as dp
+join people p on dp.people_id = p.id
+join devices d on dp.device_id = d.id
+group by p.name
+having avg(d.price) > 5000;
+
