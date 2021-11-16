@@ -55,14 +55,16 @@ on emp.department_id = dep.id
 where emp.department_id is null;
 
 --4. Используя left и right join написать запросы, которые давали бы одинаковый результат.
-select * from employers as emp
-left join departments dep
-on emp.department_id = dep.id
+select emp.name, dep.name
+from departments dep
+left join employers emp
+on dep.id=emp.department_id
 where emp.department_id is null;
 
-select * from departments as dep
-right join employers emp
-on emp.department_id = dep.id
+select emp.name, dep.name
+from employers emp
+right join departments dep
+on dep.id=emp.department_id
 where emp.department_id is null;
 
 --5. Создать таблицу teens с атрибутами name, gender и заполнить ее.
