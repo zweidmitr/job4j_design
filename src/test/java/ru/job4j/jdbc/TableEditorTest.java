@@ -59,7 +59,7 @@ public class TableEditorTest {
             proper.load(file);
 
             TableEditor tableEditor = new TableEditor(proper);
-            tableEditor.dropColumn("test","bars");
+            tableEditor.dropColumn("test", "bars");
             tableEditor.close();
 
         } catch (Exception e) {
@@ -69,12 +69,12 @@ public class TableEditorTest {
 
     @Test
     public void whenRENAMECOLUMN() {
-        try(FileInputStream file = new FileInputStream("app.properties")) {
+        try (FileInputStream file = new FileInputStream("app.properties")) {
             Properties proper = new Properties();
             proper.load(file);
 
             TableEditor tableEditor = new TableEditor(proper);
-            tableEditor.renameColumn("test","bars","horizon");
+            tableEditor.renameColumn("test", "bars", "horizon");
             tableEditor.close();
 
         } catch (Exception e) {

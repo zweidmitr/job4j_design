@@ -40,7 +40,7 @@ public class TableEditor implements AutoCloseable {
     }
 
     public void dropTable(String tableName) throws Exception {
-        try(Statement statement = connection.createStatement()) {
+        try (Statement statement = connection.createStatement()) {
             String sql = String.format(
                     "DROP TABLE %s;",
                     tableName
@@ -59,11 +59,11 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    public void dropColumn(String tableName, String columnName) throws Exception{
+    public void dropColumn(String tableName, String columnName) throws Exception {
         try (Statement statement = connection.createStatement()) {
             String sql = String.format(
                     "ALTER TABLE %s DROP COLUMN %s;",
-                    tableName,columnName
+                    tableName, columnName
             );
             statement.execute(sql);
         }
@@ -78,7 +78,6 @@ public class TableEditor implements AutoCloseable {
             statement.execute(sql);
         }
     }
-
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
         var rowSeparator = "-".repeat(30).concat(System.lineSeparator());
