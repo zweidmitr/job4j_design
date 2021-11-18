@@ -17,7 +17,6 @@ public class TableEditorTest {
             TableEditor tableEditor = new TableEditor(proper);
             tableEditor.createTable("test");
             tableEditor.close();
-            System.out.println("create");
         } catch (Exception e) {
             e.printStackTrace();
         }
