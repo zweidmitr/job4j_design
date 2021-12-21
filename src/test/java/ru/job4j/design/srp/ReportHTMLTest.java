@@ -27,10 +27,12 @@ public class ReportHTMLTest {
                 .append("<head>")
                 .append(System.lineSeparator())
                 .append("<body>")
+                .append("<p>")
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
                 .append(worker.getSalary()).append(";")
+                .append("</p>")
                 .append(System.lineSeparator())
                 .append("</body>")
                 .append("</html>");

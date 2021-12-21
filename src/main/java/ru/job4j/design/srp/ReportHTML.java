@@ -25,10 +25,11 @@ public class ReportHTML implements Report {
                 .append("<body>");
 
         for (Employee employee : store.findBy(filter)) {
-            text.append(employee.getName()).append(";")
+            text.append("<p>" + employee.getName()).append(";")
                     .append(employee.getHired()).append(";")
                     .append(employee.getFired()).append(";")
                     .append(employee.getSalary()).append(";")
+                    .append("</p>")
                     .append(System.lineSeparator())
                     .append("</body>")
                     .append("</html>");
