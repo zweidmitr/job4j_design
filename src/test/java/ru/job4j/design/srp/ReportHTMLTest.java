@@ -19,17 +19,21 @@ public class ReportHTMLTest {
         StringBuilder expect = new StringBuilder()
                 .append("<html>")
                 .append(System.lineSeparator())
+                .append("<head>")
+                .append(System.lineSeparator())
+                .append("<meta content=\"...\" />")
+                .append(System.lineSeparator())
+                .append("<title> Name; Hired; Fired; Salary; </title>")
+                .append("<head>")
+                .append(System.lineSeparator())
                 .append("<body>")
-                .append(System.lineSeparator())
-                .append("<p> Name; Hired; Fired; Salary; </p>")
-                .append(System.lineSeparator())
                 .append(worker.getName()).append(";")
                 .append(worker.getHired()).append(";")
                 .append(worker.getFired()).append(";")
                 .append(worker.getSalary()).append(";")
                 .append(System.lineSeparator())
                 .append("</body>")
-                .append("</body>");
+                .append("</html>");
         assertThat(engine.generate(em -> true), is(expect.toString()));
     }
 

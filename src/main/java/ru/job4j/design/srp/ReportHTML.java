@@ -15,10 +15,14 @@ public class ReportHTML implements Report {
         StringBuilder text = new StringBuilder();
         text.append("<html>")
                 .append(System.lineSeparator())
-                .append("<body>")
+                .append("<head>")
                 .append(System.lineSeparator())
-                .append("<p> Name; Hired; Fired; Salary; </p>")
-                .append(System.lineSeparator());
+                .append("<meta content=\"...\" />")
+                .append(System.lineSeparator())
+                .append("<title> Name; Hired; Fired; Salary; </title>")
+                .append("<head>")
+                .append(System.lineSeparator())
+                .append("<body>");
 
         for (Employee employee : store.findBy(filter)) {
             text.append(employee.getName()).append(";")
@@ -27,7 +31,7 @@ public class ReportHTML implements Report {
                     .append(employee.getSalary()).append(";")
                     .append(System.lineSeparator())
                     .append("</body>")
-                    .append("</body>");
+                    .append("</html>");
         }
         return text.toString();
     }
