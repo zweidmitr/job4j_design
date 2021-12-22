@@ -30,10 +30,10 @@ public class ReportHTML implements Report {
                     .append(employee.getFired()).append(";")
                     .append(employee.getSalary()).append(";")
                     .append("</p>")
-                    .append(System.lineSeparator())
-                    .append("</body>")
-                    .append("</html>");
+                    .append(System.lineSeparator());
         }
+        text.append("</body>")
+                .append("</html>");
         return text.toString();
     }
 }
