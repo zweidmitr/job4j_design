@@ -32,8 +32,7 @@ public class ReportHTML implements Report {
                     .append("</p>")
                     .append(System.lineSeparator());
         }
-        text.append("</body>")
-                .append("</html>");
+        text.append("</body>").append("</html>");
         return text.toString();
     }
 }
