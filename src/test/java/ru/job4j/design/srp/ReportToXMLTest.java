@@ -29,14 +29,14 @@ public class ReportToXMLTest {
         StringBuilder result = new StringBuilder();
         result
                 .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n")
-                .append("<users>\n")
+                .append("<employees>\n")
                 .append("    <users>\n")
                 .append("        <fired>" + proba + "</fired>\n")
                 .append("        <hired>" + proba + "</hired>\n")
                 .append("        <name>Ivan</name>\n")
                 .append("        <salary>100.0</salary>\n")
                 .append("    </users>\n")
-                .append("</users>\n");
+                .append("</employees>\n");
         assertThat(engine.generate(em -> true), is(result.toString()));
 
     }

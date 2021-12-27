@@ -47,7 +47,7 @@ public class ReportToXML implements Report {
         return xml;
     }
 
-    @XmlRootElement(name = "users")
+    @XmlRootElement(name = "employees")
     public static class Employees {
 
         private List<Employee> employees;
