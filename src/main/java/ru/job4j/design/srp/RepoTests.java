@@ -4,13 +4,14 @@ import java.util.Calendar;
 
 public class RepoTests {
     public static void main(String[] args) {
-        JSONTest();
+        jsonTest();
         System.out.println("=====");
-        XMLTest();
+        xmlTest();
         System.out.println("done");
 
     }
-     public static void JSONTest() {
+
+     public static void jsonTest() {
          MemStore store = new MemStore();
          Calendar now = Calendar.getInstance();
          Employee worker = new Employee("Ivan", now, now, 100);
@@ -19,7 +20,7 @@ public class RepoTests {
          System.out.println(engine.generate(em -> true));
      }
 
-     public static void XMLTest() {
+     public static void xmlTest() {
          MemStore store = new MemStore();
          Calendar now = Calendar.getInstance();
          Employee worker = new Employee("Ivan", now, now, 100);
