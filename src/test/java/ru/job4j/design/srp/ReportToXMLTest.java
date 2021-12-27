@@ -4,19 +4,21 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneOffset;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class ReportToXMLTest {
 
-    @Ignore
     @Test
     public void whenXMLTest() {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+03:00");
+        now.setTimeZone(TimeZone.getTimeZone(ZoneOffset.of("+3")));
         Employee worker = new Employee("Ivan", now, now, 100);
         store.add(worker);
         Report engine = new ReportToXML(store);
