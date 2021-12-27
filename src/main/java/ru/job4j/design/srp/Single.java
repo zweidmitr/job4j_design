@@ -6,7 +6,7 @@ public class Single {
     private Single() {
     }
 
-    public static Single getOne() { // #3
+    public static Single getOne() {
         if (one == null) {
             one = new Single();
         }
