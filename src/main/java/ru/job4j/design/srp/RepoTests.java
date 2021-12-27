@@ -1,5 +1,6 @@
 package ru.job4j.design.srp;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class RepoTests {
@@ -8,6 +9,12 @@ public class RepoTests {
         System.out.println("=====");
         xmlTest();
         System.out.println("done");
+
+        Calendar now = Calendar.getInstance();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS+03:00");
+        now = Calendar.getInstance();
+        System.out.println(now);
+        System.out.println(formatter.format(now.getTime()));
 
     }
 
