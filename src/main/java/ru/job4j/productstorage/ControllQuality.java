@@ -2,25 +2,29 @@ package ru.job4j.productstorage;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 public class ControllQuality {
     /**
-     * контроль и размещение продуктов
-     * @param food
+     * Хранилище для продукта
      */
- public void controll(Food food) {
+    private final List<Storage> storageList;
 
- }
+    public ControllQuality(List<Storage> storageList) {
+        this.storageList = storageList;
+    }
 
     /**
-     * рассчитываем время жизни, остаток и % оставшегося времени (для продукта)
+     * контроль и размещение продуктов
      *
-     * @param food продукты
-     * @return срок годности от текущего момента
+     * @param food
      */
-    public double checkFood(Food food) {
-        double time = ChronoUnit.DAYS.between(food.getCreateDate(), food.getExpiryDate());
-        double remain = ChronoUnit.DAYS.between(LocalDate.now(), food.getExpiryDate());
-        return remain / time * 100;
+    public void controll(Food food) {
+        for (Storage storage : storageList) {
+            if (storage.accept(food)) {
+                storage.add(food);
+                break;
+            }
+        }
     }
 }
