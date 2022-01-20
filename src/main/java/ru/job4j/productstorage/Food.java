@@ -1,15 +1,26 @@
 package ru.job4j.productstorage;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 
+/**
+ * модель продуктов
+ */
 public class Food {
     private String name;
-    private Calendar expiryDate;
-    private Calendar createDate;
+    private LocalDate expiryDate;
+    private LocalDate createDate;
     private double price;
     private double discount;
 
-    public Food(String name, Calendar expiryDate, Calendar createDate, double price, double discount) {
+    /**
+     *
+     * @param name        продукт
+     * @param expiryDate  годен до
+     * @param createDate  дата создания
+     * @param price       цена
+     * @param discount    скидка
+     */
+    public Food(String name, LocalDate expiryDate, LocalDate createDate, double price, double discount) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -25,19 +36,19 @@ public class Food {
         this.name = name;
     }
 
-    public Calendar getExpiryDate() {
+    public LocalDate getExpiryDate() {
         return expiryDate;
     }
 
-    public void setExpiryDate(Calendar expiryDate) {
+    public void setExpiryDate(LocalDate expiryDate) {
         this.expiryDate = expiryDate;
     }
 
-    public Calendar getCreateDate() {
+    public LocalDate getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Calendar createDate) {
+    public void setCreateDate(LocalDate createDate) {
         this.createDate = createDate;
     }
 
