@@ -23,8 +23,8 @@ public class ControllQualityTest {
     @Test
     public void whenFoodAddToTrash() {
         Food crisps = new Crisps("Pringles",
-                LocalDate.of(2022, Month.JANUARY, 19),
-                LocalDate.of(2020, Month.JANUARY, 17),
+                LocalDate.now().minusDays(2),
+                LocalDate.now().minusDays(222),
                 125, 50);
         controllFood.controll(crisps);
         Storage trash = storageList.get(2);
@@ -34,8 +34,8 @@ public class ControllQualityTest {
     @Test
     public void whenFoodAddToShop() {
         Food chilli = new Chilli("Халапеньо",
-                LocalDate.of(2022, Month.MAY, 01),
-                LocalDate.of(2021, Month.JANUARY, 11),
+                LocalDate.now().plusDays(365),
+                LocalDate.now().minusDays(135),
                 100, 7);
         controllFood.controll(chilli);
         Storage shop = storageList.get(1);
@@ -45,8 +45,8 @@ public class ControllQualityTest {
     @Test
     public void whenFoodAddToShopWithDiscount() {
         Food chilli = new Chilli("Халапеньо",
-                LocalDate.of(2022, Month.FEBRUARY, 01),
-                LocalDate.of(2021, Month.JANUARY, 11),
+                LocalDate.now().plusDays(15),
+                LocalDate.now().minusDays(365),
                 100, 35);
         controllFood.controll(chilli);
         assertThat(chilli.getPrice(), is(65.0));

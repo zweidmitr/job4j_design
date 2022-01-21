@@ -20,8 +20,12 @@ public class Trash implements Storage {
      * @param food продукты
      */
     @Override
-    public void add(Food food) {
-        foodList.add(food);
+    public boolean add(Food food) {
+        boolean result = accept(food);
+        if (result) {
+            foodList.add(food);
+        }
+        return result;
     }
 
     /**
@@ -34,19 +38,6 @@ public class Trash implements Storage {
     public List<Food> getFoodList() {
         List<Food> copyList = new ArrayList<>(foodList);
         return copyList;
-    }
-
-    /**
-     * рассчитываем время жизни, остаток и % оставшегося времени (для продукта)
-     *
-     * @param food продукты
-     * @return срок годности от текущего момента
-     */
-    @Override
-    public double checkFood(Food food) {
-        double time = ChronoUnit.DAYS.between(food.getCreateDate(), food.getExpiryDate());
-        double remain = ChronoUnit.DAYS.between(LocalDate.now(), food.getExpiryDate());
-        return remain / time * 100;
     }
 
     /**

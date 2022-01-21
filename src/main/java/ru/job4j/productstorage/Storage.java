@@ -1,5 +1,7 @@
 package ru.job4j.productstorage;
 
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 /**
@@ -12,7 +14,7 @@ public interface Storage {
      *
      * @param food продукты
      */
-    void add(Food food);
+    boolean add(Food food);
 
     /**
      * получаем список продуктов на складе
@@ -27,7 +29,11 @@ public interface Storage {
      * @param food продукты
      * @return срок годности от текущего момента
      */
-    double checkFood(Food food);
+    default double checkFood(Food food) {
+        double time = ChronoUnit.DAYS.between(food.getCreateDate(), food.getExpiryDate());
+        double remain = ChronoUnit.DAYS.between(LocalDate.now(), food.getExpiryDate());
+        return remain / time * 100;
+    }
 
     /**
      * данный метод проверяет может ли хранилище принять продукт

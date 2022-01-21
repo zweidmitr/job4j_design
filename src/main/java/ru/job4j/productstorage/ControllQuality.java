@@ -21,10 +21,7 @@ public class ControllQuality {
      */
     public void controll(Food food) {
         for (Storage storage : storageList) {
-            if (storage.accept(food)) {
-                storage.add(food);
-                break;
-            }
+            storage.add(food);
         }
     }
 }
