@@ -1,4 +1,4 @@
-package ru.job4j.productstorage;
+package ru.job4j.ood.lsp.productstorage;
 
 import org.junit.Before;
 import org.junit.Test;

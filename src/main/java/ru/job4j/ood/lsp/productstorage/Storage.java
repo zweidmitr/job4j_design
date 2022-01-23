@@ -1,4 +1,4 @@
-package ru.job4j.productstorage;
+package ru.job4j.ood.lsp.productstorage;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

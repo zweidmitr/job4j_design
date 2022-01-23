@@ -1,14 +1,12 @@
-package ru.job4j.productstorage;
+package ru.job4j.ood.lsp.productstorage;
 
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Условие: Если срок годности израсходован меньше чем на 25% направить в Warehouse;
+ * Условие: Если срок годности вышел. Отправить продукт в мусорку.
  */
-public class Warehouse implements Storage {
+public class Trash implements Storage {
     /**
      * тут храним продукты
      */
@@ -49,7 +47,7 @@ public class Warehouse implements Storage {
     public boolean accept(Food food) {
         boolean result = false;
         double tempCheck = checkFood(food);
-        if (tempCheck > 75) {
+        if (tempCheck < 1) {
             result = true;
         }
         return result;
