@@ -7,6 +7,8 @@ import static org.junit.Assert.*;
 public class ParkCarsTest {
     PassengerCar pCar1 = new PassengerCar();
     PassengerCar pCar2 = new PassengerCar();
+    PassengerCar mini1 = new PassengerCar();
+    PassengerCar mini2 = new PassengerCar();
     Truck tCar1 = new Truck(2);
     Truck tCar2 = new Truck(3);
     Truck tCar3 = new Truck(6);
@@ -17,6 +19,24 @@ public class ParkCarsTest {
         assertTrue(parking.parkCar(pCar1));
         assertTrue(parking.parkCar(pCar2));
         assertTrue(parking.parkCar(tCar1));
+    }
+
+    @Test
+    public void whenTruckOnPassPlace() {
+        ParkCars parking = new ParkCars(2, 4);
+        assertTrue(parking.parkCar(pCar1));
+        assertTrue(parking.parkCar(tCar1));
+        assertTrue(parking.parkCar(tCar2));
+    }
+
+    @Test
+    public void whenMiniOnTruckPlace() {
+        ParkCars parking = new ParkCars(2, 4);
+        assertTrue(parking.parkCar(pCar1));
+        assertTrue(parking.parkCar(pCar2));
+        assertTrue(parking.parkCar(tCar1));
+        assertTrue(parking.parkCar(mini1));
+        assertTrue(parking.parkCar(mini2));
     }
 
     @Test
