@@ -14,7 +14,7 @@ public class ParkCarsTest {
 
     @Test
     @Ignore
-    public void whenPark2pCarAnd1tCar(){
+    public void whenPark2pCarAnd1tCar() {
         ParkCars parking = new ParkCars();
         assertTrue(parking.parkCar(pCar1));
         assertTrue(parking.parkCar(pCar2));
@@ -23,7 +23,7 @@ public class ParkCarsTest {
 
     @Test
     @Ignore
-    public void whenPark2tCar(){
+    public void whenPark2tCar() {
         ParkCars parking = new ParkCars();
         assertTrue(parking.parkCar(tCar1));
         assertTrue(parking.parkCar(tCar2));
