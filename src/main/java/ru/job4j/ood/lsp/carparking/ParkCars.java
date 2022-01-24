@@ -1,17 +1,42 @@
 package ru.job4j.ood.lsp.carparking;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ParkCars implements Parking {
     /**
-     * park car
+     * количество мест, необходимых для парковки
+     */
+    private int sizePassCar;
+    private int sizeTruck;
+
+    private final List<Car> parkingLot = new ArrayList<>();
+
+    public ParkCars(int sizePassCar, int sizeTruck) {
+        this.sizePassCar = sizePassCar;
+        this.sizeTruck = sizeTruck;
+    }
+
+    /**
+     * parking passengerCar or Truck or ...
      *
      * @param car passengerCar or Truck
      * @return yes/no
      */
     @Override
     public boolean parkCar(Car car) {
-        return false;
+        boolean result = false;
+        int carSize = car.getSize();
+        if (carSize == 1 && sizePassCar >= 1) {
+            parkingLot.add(car);
+            sizePassCar--;
+            result = true;
+        } else if (carSize > 1 && sizeTruck >= carSize) {
+            result = true;
+            parkingLot.add(car);
+            sizeTruck -= carSize;
+        }
+        return result;
     }
 
     /**
@@ -21,6 +46,7 @@ public class ParkCars implements Parking {
      */
     @Override
     public List<Car> getParkCar() {
-        return null;
+        ArrayList<Car> park = new ArrayList<>(parkingLot);
+        return park;
     }
 }
