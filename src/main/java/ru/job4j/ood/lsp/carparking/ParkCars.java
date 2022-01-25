@@ -31,16 +31,17 @@ public class ParkCars implements Parking {
             parkingLot.add(car);
             sizePassCar--;
             result = true;
-        } else if (carSize > 1 && sizeTruck >= carSize) {
-            parkingLot.add(car);
-            sizeTruck -= carSize;
-            result = true;
-        } else if (carSize > sizeTruck && (carSize - sizeTruck) <= sizePassCar) {
-            int temp = carSize - sizeTruck;
-            sizeTruck = 0;
-            sizePassCar -= temp;
-            parkingLot.add(car);
-            result = true;
+        }
+        if (carSize > 1) {
+            if (sizeTruck > 0) {
+                parkingLot.add(car);
+                sizeTruck--;
+                return true;
+            } else if (carSize <= sizePassCar) {
+                parkingLot.add(car);
+                sizePassCar -= carSize;
+                return true;
+            }
         }
         return result;
     }

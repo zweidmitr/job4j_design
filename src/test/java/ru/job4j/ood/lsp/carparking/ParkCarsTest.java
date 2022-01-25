@@ -36,12 +36,12 @@ public class ParkCarsTest {
     }
 
     @Test
-    public void whenPark1pCarAnd3tCarOneTruckExcess() {
+    public void whenPark1pCarAnd3tCar() {
         ParkCars parking = new ParkCars(5, 6);
         assertTrue(parking.parkCar(pCar1));
         assertTrue(parking.parkCar(tCar1));
         assertTrue(parking.parkCar(tCar2));
-        assertFalse(parking.parkCar(tCar3));
+        assertTrue(parking.parkCar(tCar3));
     }
 
     @Test
