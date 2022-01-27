@@ -1,19 +1,21 @@
 package ru.job4j.ood.isp.menu;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
+    private List<Element> list = new ArrayList<>();
 
-    List<Element> list;
-
-    public Menu(List<Element> list) {
-        this.list = list;
+    public Menu(String name, Action action) {
+        this.list.add(new Element(name, action));
     }
 
-    public void print() {
+    public String print() {
+        String result = "";
         for (Element elem : list) {
-            System.out.println(elem);
+            result = elem.toString();
         }
+        return result;
     }
 
     /**
@@ -23,7 +25,7 @@ public class Menu {
      * @param childName
      * @param action
      */
-    void add(String parentName, String childName, Action action) {
+    public void add(String parentName, String childName, Action action) {
         Element parentElement = findElement(parentName);
         parentElement.add(new Element(childName, action));
     }
