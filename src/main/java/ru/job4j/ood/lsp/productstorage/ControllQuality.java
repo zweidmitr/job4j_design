@@ -1,5 +1,6 @@
 package ru.job4j.ood.lsp.productstorage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ControllQuality {
@@ -10,6 +11,31 @@ public class ControllQuality {
 
     public ControllQuality(List<Storage> storageList) {
         this.storageList = storageList;
+    }
+
+    /**
+     * метод извлекает все продукты и перераспределяет с помощью метода relocate()
+     */
+    public void resort() {
+        List<Food> allFood = new ArrayList<>();
+        for (Storage store:storageList) {
+            allFood.addAll(store.getFoodList());
+            store.getFoodList().clear();
+        }
+        for (Food food : allFood) {
+            relocate(food);
+        }
+    }
+
+    /**
+     * распределяет еду по хранилищам
+     *
+     * @param food
+     */
+    public void relocate(Food food) {
+        for (Storage store : storageList) {
+            store.add(food);
+        }
     }
 
     /**
