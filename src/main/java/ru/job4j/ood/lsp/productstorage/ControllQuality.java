@@ -18,9 +18,9 @@ public class ControllQuality {
      */
     public void resort() {
         List<Food> allFood = new ArrayList<>();
-        for (Storage store:storageList) {
+        for (Storage store : storageList) {
             allFood.addAll(store.getFoodList());
-            store.getFoodList().clear();
+            store.clearFoodList();
         }
         for (Food food : allFood) {
             relocate(food);

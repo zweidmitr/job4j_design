@@ -24,6 +24,11 @@ public interface Storage {
     List<Food> getFoodList();
 
     /**
+     * зачищаем список продуктов на складе
+     */
+    void clearFoodList();
+
+    /**
      * рассчитываем время жизни, остаток и % оставшегося времени (для продукта)
      *
      * @param food продукты

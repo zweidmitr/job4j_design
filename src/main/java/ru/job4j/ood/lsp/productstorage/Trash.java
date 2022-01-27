@@ -38,6 +38,11 @@ public class Trash implements Storage {
         return copyList;
     }
 
+    @Override
+    public void clearFoodList() {
+        foodList.clear();
+    }
+
     /**
      * данный метод проверяет может ли хранилище принять продукт
      *
